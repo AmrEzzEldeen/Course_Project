@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/tenants")
 public class TenantController {
+    // add search by string
+    //modify update -> unit ID as @RequestParam instead if @PathVariable
     private final TenantService tenantService;
 
     public TenantController(TenantService tenantService) {
@@ -20,6 +22,11 @@ public class TenantController {
     @GetMapping
     public ResponseEntity<List<Tenant>> getAllTenants() {
         return tenantService.getAllTenants();
+    }
+
+    @GetMapping("/{tenantName}")
+    public ResponseEntity<List<Tenant>> getTenantsByUserName(@PathVariable String tenantName) {
+        return new ResponseEntity<>(tenantService.getTenantsByUserName(tenantName), HttpStatus.OK);
     }
 
     @PostMapping("/{unitId}")
@@ -33,9 +40,8 @@ public class TenantController {
         return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
 
-    @PutMapping("/{tenantID}/{unitId}")
-    public ResponseEntity<Tenant> updateById(@PathVariable Long tenantID,@RequestBody Tenant tenant, @PathVariable Long unitId) {
-
+    @PutMapping("/{tenantID}")
+    public ResponseEntity<Tenant> updateById(@PathVariable Long tenantID,@RequestBody Tenant tenant, @RequestParam Long unitId) {
         return new ResponseEntity<>(tenantService.updateById(tenantID, tenant, unitId), HttpStatus.OK);
     }
 }

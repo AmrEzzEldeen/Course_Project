@@ -52,4 +52,8 @@ public class TenantService {
                 })
                 .orElseThrow(() -> new RuntimeException("Tenant not found with id " + tenantID));
     }
+
+    public List<Tenant> getTenantsByUserName(String userName) {
+        return tenantRepository.findByFirstNameContainingIgnoreCase(userName);
+    }
 }
