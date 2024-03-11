@@ -11,8 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tenants")
 public class TenantController {
-    // add search by string
-    //modify update -> unit ID as @RequestParam instead if @PathVariable
+
     private final TenantService tenantService;
 
     public TenantController(TenantService tenantService) {
