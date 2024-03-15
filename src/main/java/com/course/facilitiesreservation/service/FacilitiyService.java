@@ -1,10 +1,9 @@
 package com.course.facilitiesreservation.service;
 
-import com.course.facilitiesreservation.entity.Facilitiy;
+import com.course.facilitiesreservation.entity.Facility;
 import com.course.facilitiesreservation.repository.FacilityRepository;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.List;
 
 @Service
@@ -15,12 +14,17 @@ public class FacilitiyService {
         this.facilityRepository = facilityRepository;
     }
 
-    public List<Facilitiy> getFacilities() {
+    public List<Facility> getFacilities() {
         return facilityRepository.findAll();
     }
 
 
-    public Facilitiy addFacility(Facilitiy facilitiy) {
-        return facilityRepository.save(facilitiy);
+    public Facility addFacility(Facility facility) {
+        return facilityRepository.save(facility);
+    }
+
+    public Facility getFacilityById(Long facilityId) {
+        return facilityRepository.findById(facilityId)
+                .orElseThrow(() -> new RuntimeException("No facility found"));
     }
 }

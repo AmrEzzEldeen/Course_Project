@@ -12,12 +12,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "facilities")
-public class Facilitiy {
+public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
     private Integer maxNoReservers;
     private String location;
 }
