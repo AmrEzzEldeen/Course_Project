@@ -1,5 +1,6 @@
 package com.course.facilitiesreservation.controller;
 
+import com.course.facilitiesreservation.dto.TenantDTO;
 import com.course.facilitiesreservation.entity.Tenant;
 import com.course.facilitiesreservation.service.TenantService;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,12 @@ public class TenantController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tenant>> getAllTenants() {
+    public ResponseEntity<List<TenantDTO>> getAllTenants() {
         return tenantService.getAllTenants();
     }
 
-    @GetMapping("/{tenantName}")
-    public ResponseEntity<List<Tenant>> getTenantsByUserName(@PathVariable String tenantName) {
+    @GetMapping("/search")
+    public ResponseEntity<List<TenantDTO>> getTenantsByUserName(@RequestParam("name") String tenantName) {
         return new ResponseEntity<>(tenantService.getTenantsByUserName(tenantName), HttpStatus.OK);
     }
 

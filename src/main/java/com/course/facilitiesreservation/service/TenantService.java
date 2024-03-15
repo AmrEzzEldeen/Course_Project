@@ -1,5 +1,7 @@
 package com.course.facilitiesreservation.service;
 
+import com.course.facilitiesreservation.dto.TenantDTO;
+import com.course.facilitiesreservation.dto.mapping.TenantMapper;
 import com.course.facilitiesreservation.entity.Tenant;
 import com.course.facilitiesreservation.entity.Unit;
 import com.course.facilitiesreservation.repository.TenantRepository;
@@ -8,17 +10,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TenantService {
     private final TenantRepository tenantRepository;
     private final UnitRepository unitRepository;
 
-    public TenantService(TenantRepository tenantRepository, UnitRepository unitRepository) {
+    private final TenantMapper tenantMapper;
+
+    public TenantService(TenantRepository tenantRepository, UnitRepository unitRepository, TenantMapper tenantMapper) {
 
         this.tenantRepository = tenantRepository;
         this.unitRepository = unitRepository;
+        this.tenantMapper = tenantMapper;
     }
 
     public Tenant createTenant(Tenant tenant, Long unitId) {
@@ -29,8 +36,13 @@ public class TenantService {
         return tenantRepository.save(tenant);
     }
 
-    public ResponseEntity<List<Tenant>> getAllTenants() {
-        return new ResponseEntity<>(tenantRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<TenantDTO>> getAllTenants() {
+        List<Tenant> tenants = tenantRepository.findAll();
+        List<TenantDTO> tenantDTOS = new ArrayList<>();
+        for (Tenant tenant : tenants) {
+            tenantDTOS.add(tenantMapper.toTenantDto(tenant));
+        }
+        return new ResponseEntity<>(tenantDTOS, HttpStatus.OK);
     }
 
     public void deleteTenantById(Long id) {
@@ -53,7 +65,12 @@ public class TenantService {
                 .orElseThrow(() -> new RuntimeException("Tenant not found with id " + tenantID));
     }
 
-    public List<Tenant> getTenantsByUserName(String userName) {
-        return tenantRepository.findByFirstNameContainingIgnoreCase(userName);
+    public List<TenantDTO> getTenantsByUserName(String userName) {
+       List<Tenant> tenants =tenantRepository.findByFirstNameContainingIgnoreCase(userName);
+       List<TenantDTO> tenantDTOS = new ArrayList<>();
+        for (Tenant tenant : tenants) {
+            tenantDTOS.add(tenantMapper.toTenantDto(tenant));
+        }
+        return tenantDTOS;
     }
 }

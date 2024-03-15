@@ -51,6 +51,4 @@ public class Tenant {
     private Unit unit;
 }
 
-enum Gender {
-    MALE, FEMALE
-}
+
