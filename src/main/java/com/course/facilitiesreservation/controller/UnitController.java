@@ -1,7 +1,9 @@
 package com.course.facilitiesreservation.controller;
 
+import com.course.facilitiesreservation.dto.UnitDTO;
 import com.course.facilitiesreservation.entity.Unit;
 import com.course.facilitiesreservation.service.UnitService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +19,8 @@ public class UnitController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Unit>> getAllUnits() {
-        return unitService.getAllUnits();
+    public ResponseEntity<List<UnitDTO>> getAllUnits() {
+        return new ResponseEntity<>(unitService.getAllUnits(), HttpStatus.FOUND);
     }
 
     @PostMapping

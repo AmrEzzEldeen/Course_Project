@@ -30,7 +30,7 @@ public class TenantController {
     }
 
     @PostMapping("/{unitId}")
-    public ResponseEntity<Tenant> addTenant(@RequestBody Tenant tenant, @PathVariable Long unitId) {
+    public ResponseEntity<TenantDTO> addTenant(@RequestBody Tenant tenant, @PathVariable Long unitId) {
         return new ResponseEntity<>(tenantService.createTenant(tenant, unitId), HttpStatus.CREATED);
     }
 

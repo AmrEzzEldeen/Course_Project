@@ -28,12 +28,14 @@ public class TenantService {
         this.tenantMapper = tenantMapper;
     }
 
-    public Tenant createTenant(Tenant tenant, Long unitId) {
+    public TenantDTO createTenant(Tenant tenant, Long unitId) {
         Unit unit = unitRepository.findById(unitId)
                 .orElseThrow(() -> new RuntimeException("Unit not found"));
         System.out.println("UNIT IS FOUND");
         tenant.setUnit(unit);
-        return tenantRepository.save(tenant);
+        tenantRepository.save(tenant);
+
+        return tenantMapper.toTenantDto(tenant);
     }
 
     public ResponseEntity<List<TenantDTO>> getAllTenants() {

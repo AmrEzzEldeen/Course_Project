@@ -32,7 +32,7 @@ public class Unit {
     private String location;
 
     @OneToMany(mappedBy = "unit")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Tenant> tenants;
 
 }
