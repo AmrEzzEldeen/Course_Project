@@ -54,4 +54,8 @@ public class TimeSlotService {
         timeSlotRepository.deleteAll(timeSlots);
         return "Deleted all time slots for facility with id: " + facilityid;
     }
+
+    public void deleteTimeSlot(Long timeSlotId) {
+        timeSlotRepository.deleteById(timeSlotId);
+    }
 }

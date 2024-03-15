@@ -29,4 +29,10 @@ public class TimeSlotController {
     public String deleteTimeSlotsForFacility (@PathVariable Long facilityid) {
         return timeSlotService.deleteTimeSlotsForFacility(facilityid);
     }
+
+    @DeleteMapping("/timeslot/{timeslotId}")
+    public String deleteTimeSlot (@PathVariable Long timeslotId) {
+        timeSlotService.deleteTimeSlot(timeslotId);
+        return "Time slot deleted successfully";
+    }
 }
