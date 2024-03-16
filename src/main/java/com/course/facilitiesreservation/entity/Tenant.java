@@ -46,7 +46,7 @@ public class Tenant {
     private String nationality;
 
     @ManyToOne
-//    @JsonBackReference
+    @JsonBackReference
     @JoinColumn(name = "unit_id")
     private Unit unit;
 }

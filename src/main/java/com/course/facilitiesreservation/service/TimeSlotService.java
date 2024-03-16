@@ -58,4 +58,11 @@ public class TimeSlotService {
     public void deleteTimeSlot(Long timeSlotId) {
         timeSlotRepository.deleteById(timeSlotId);
     }
+
+    public void setTimeSlotIsAvailable(boolean bool, Long id) {
+        TimeSlot timeSlot = timeSlotRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("TimeSlot not found with id " + id));
+        timeSlot.setIsAvailable(bool);
+        timeSlotRepository.save(timeSlot);
+    }
 }

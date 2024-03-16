@@ -2,6 +2,8 @@ package com.course.facilitiesreservation.controller;
 
 import com.course.facilitiesreservation.entity.TimeSlot;
 import com.course.facilitiesreservation.service.TimeSlotService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,9 @@ public class TimeSlotController {
     }
 
     @DeleteMapping("/{facilityid}")
-    public String deleteTimeSlotsForFacility (@PathVariable Long facilityid) {
-        return timeSlotService.deleteTimeSlotsForFacility(facilityid);
+    public ResponseEntity<String> deleteTimeSlotsForFacility (@PathVariable Long facilityid) {
+        timeSlotService.deleteTimeSlotsForFacility(facilityid);
+        return new ResponseEntity<>("Facility Deleted", HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/timeslot/{timeslotId}")

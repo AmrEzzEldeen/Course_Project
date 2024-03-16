@@ -20,24 +20,24 @@ public class TenantController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TenantDTO>> getAllTenants() {
+    public ResponseEntity<List<Tenant>> getAllTenants() {
         return tenantService.getAllTenants();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<TenantDTO>> getTenantsByUserName(@RequestParam("name") String tenantName) {
+    public ResponseEntity<List<Tenant>> getTenantsByUserName(@RequestParam("name") String tenantName) {
         return new ResponseEntity<>(tenantService.getTenantsByUserName(tenantName), HttpStatus.OK);
     }
 
     @PostMapping("/{unitId}")
-    public ResponseEntity<TenantDTO> addTenant(@RequestBody Tenant tenant, @PathVariable Long unitId) {
+    public ResponseEntity<Tenant> addTenant(@RequestBody Tenant tenant, @PathVariable Long unitId) {
         return new ResponseEntity<>(tenantService.createTenant(tenant, unitId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{tenantID}")
     public ResponseEntity<String> deleteTenantById(@PathVariable Long tenantID) {
         tenantService.deleteTenantById(tenantID);
-        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Deleted", HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{tenantID}")

@@ -28,23 +28,20 @@ public class TenantService {
         this.tenantMapper = tenantMapper;
     }
 
-    public TenantDTO createTenant(Tenant tenant, Long unitId) {
+    public Tenant createTenant(Tenant tenant, Long unitId) {
         Unit unit = unitRepository.findById(unitId)
                 .orElseThrow(() -> new RuntimeException("Unit not found"));
         System.out.println("UNIT IS FOUND");
         tenant.setUnit(unit);
-        tenantRepository.save(tenant);
+        return tenantRepository.save(tenant);
 
-        return tenantMapper.toTenantDto(tenant);
+
     }
 
-    public ResponseEntity<List<TenantDTO>> getAllTenants() {
+    public ResponseEntity<List<Tenant>> getAllTenants() {
         List<Tenant> tenants = tenantRepository.findAll();
-        List<TenantDTO> tenantDTOS = new ArrayList<>();
-        for (Tenant tenant : tenants) {
-            tenantDTOS.add(tenantMapper.toTenantDto(tenant));
-        }
-        return new ResponseEntity<>(tenantDTOS, HttpStatus.OK);
+
+        return new ResponseEntity<>(tenants, HttpStatus.OK);
     }
 
     public void deleteTenantById(Long id) {
@@ -67,12 +64,8 @@ public class TenantService {
                 .orElseThrow(() -> new RuntimeException("Tenant not found with id " + tenantID));
     }
 
-    public List<TenantDTO> getTenantsByUserName(String userName) {
+    public List<Tenant> getTenantsByUserName(String userName) {
        List<Tenant> tenants =tenantRepository.findByFirstNameContainingIgnoreCase(userName);
-       List<TenantDTO> tenantDTOS = new ArrayList<>();
-        for (Tenant tenant : tenants) {
-            tenantDTOS.add(tenantMapper.toTenantDto(tenant));
-        }
-        return tenantDTOS;
+        return tenants;
     }
 }
